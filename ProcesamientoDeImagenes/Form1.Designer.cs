@@ -124,9 +124,9 @@ namespace ProcesamientoDeImagenes
             // 
             this.histogramBox1.AutoSize = true;
             this.histogramBox1.Location = new System.Drawing.Point(668, 16);
-            this.histogramBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.histogramBox1.Margin = new System.Windows.Forms.Padding(4);
             this.histogramBox1.Name = "histogramBox1";
-            this.histogramBox1.Size = new System.Drawing.Size(305, 211);
+            this.histogramBox1.Size = new System.Drawing.Size(380, 238);
             this.histogramBox1.TabIndex = 8;
             // 
             // Form1
