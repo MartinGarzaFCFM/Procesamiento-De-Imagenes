@@ -93,10 +93,16 @@ namespace ProcesamientoDeImagenes
             // cboFilter
             // 
             this.cboFilter.FormattingEnabled = true;
+            this.cboFilter.Items.AddRange(new object[] {
+            "",
+            "Invertir",
+            "Offset",
+            "B/N"});
             this.cboFilter.Location = new System.Drawing.Point(662, 470);
             this.cboFilter.Name = "cboFilter";
             this.cboFilter.Size = new System.Drawing.Size(164, 26);
             this.cboFilter.TabIndex = 5;
+            this.cboFilter.SelectedIndexChanged += new System.EventHandler(this.cboFilter_SelectedIndexChanged);
             // 
             // lblFilter
             // 
@@ -126,7 +132,7 @@ namespace ProcesamientoDeImagenes
             this.histogramBox1.Location = new System.Drawing.Point(668, 16);
             this.histogramBox1.Margin = new System.Windows.Forms.Padding(4);
             this.histogramBox1.Name = "histogramBox1";
-            this.histogramBox1.Size = new System.Drawing.Size(380, 238);
+            this.histogramBox1.Size = new System.Drawing.Size(437, 260);
             this.histogramBox1.TabIndex = 8;
             // 
             // Form1
