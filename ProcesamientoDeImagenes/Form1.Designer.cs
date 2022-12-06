@@ -38,7 +38,15 @@ namespace ProcesamientoDeImagenes
             this.lblFilter = new System.Windows.Forms.Label();
             this.btnPhoto = new System.Windows.Forms.Button();
             this.histogramBox1 = new Emgu.CV.UI.HistogramBox();
+            this.trackBarR = new System.Windows.Forms.TrackBar();
+            this.RGBBox = new System.Windows.Forms.GroupBox();
+            this.trackBarB = new System.Windows.Forms.TrackBar();
+            this.trackBarG = new System.Windows.Forms.TrackBar();
             ((System.ComponentModel.ISupportInitialize)(this.pic)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarR)).BeginInit();
+            this.RGBBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarB)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarG)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -97,7 +105,9 @@ namespace ProcesamientoDeImagenes
             "",
             "Invertir",
             "Offset",
-            "B/N"});
+            "B/N",
+            "Sepia",
+            "Tint"});
             this.cboFilter.Location = new System.Drawing.Point(662, 470);
             this.cboFilter.Name = "cboFilter";
             this.cboFilter.Size = new System.Drawing.Size(164, 26);
@@ -132,8 +142,54 @@ namespace ProcesamientoDeImagenes
             this.histogramBox1.Location = new System.Drawing.Point(668, 16);
             this.histogramBox1.Margin = new System.Windows.Forms.Padding(4);
             this.histogramBox1.Name = "histogramBox1";
-            this.histogramBox1.Size = new System.Drawing.Size(437, 260);
+            this.histogramBox1.Size = new System.Drawing.Size(514, 269);
             this.histogramBox1.TabIndex = 8;
+            // 
+            // trackBarR
+            // 
+            this.trackBarR.BackColor = System.Drawing.Color.DarkRed;
+            this.trackBarR.Location = new System.Drawing.Point(17, 24);
+            this.trackBarR.Maximum = 100;
+            this.trackBarR.Name = "trackBarR";
+            this.trackBarR.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.trackBarR.Size = new System.Drawing.Size(45, 151);
+            this.trackBarR.TabIndex = 10;
+            this.trackBarR.Scroll += new System.EventHandler(this.trackBarR_Scroll);
+            // 
+            // RGBBox
+            // 
+            this.RGBBox.Controls.Add(this.trackBarB);
+            this.RGBBox.Controls.Add(this.trackBarG);
+            this.RGBBox.Controls.Add(this.trackBarR);
+            this.RGBBox.Location = new System.Drawing.Point(832, 470);
+            this.RGBBox.Name = "RGBBox";
+            this.RGBBox.Size = new System.Drawing.Size(183, 186);
+            this.RGBBox.TabIndex = 11;
+            this.RGBBox.TabStop = false;
+            this.RGBBox.Text = "RGB";
+            this.RGBBox.Visible = false;
+            // 
+            // trackBarB
+            // 
+            this.trackBarB.BackColor = System.Drawing.Color.SkyBlue;
+            this.trackBarB.Location = new System.Drawing.Point(119, 24);
+            this.trackBarB.Maximum = 100;
+            this.trackBarB.Name = "trackBarB";
+            this.trackBarB.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.trackBarB.Size = new System.Drawing.Size(45, 151);
+            this.trackBarB.TabIndex = 12;
+            this.trackBarB.Scroll += new System.EventHandler(this.trackBarB_Scroll);
+            // 
+            // trackBarG
+            // 
+            this.trackBarG.BackColor = System.Drawing.Color.ForestGreen;
+            this.trackBarG.Location = new System.Drawing.Point(68, 24);
+            this.trackBarG.Maximum = 100;
+            this.trackBarG.Name = "trackBarG";
+            this.trackBarG.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.trackBarG.Size = new System.Drawing.Size(45, 151);
+            this.trackBarG.TabIndex = 11;
+            this.trackBarG.Scroll += new System.EventHandler(this.trackBarG_Scroll);
             // 
             // Form1
             // 
@@ -141,6 +197,7 @@ namespace ProcesamientoDeImagenes
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.ClientSize = new System.Drawing.Size(1264, 681);
+            this.Controls.Add(this.RGBBox);
             this.Controls.Add(this.histogramBox1);
             this.Controls.Add(this.lblFilter);
             this.Controls.Add(this.cboFilter);
@@ -158,6 +215,11 @@ namespace ProcesamientoDeImagenes
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pic)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarR)).EndInit();
+            this.RGBBox.ResumeLayout(false);
+            this.RGBBox.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarB)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarG)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -173,6 +235,10 @@ namespace ProcesamientoDeImagenes
         private System.Windows.Forms.Label lblFilter;
         private System.Windows.Forms.Button btnPhoto;
         private HistogramBox histogramBox1;
+        private System.Windows.Forms.GroupBox RGBBox;
+        private System.Windows.Forms.TrackBar trackBarR;
+        private System.Windows.Forms.TrackBar trackBarG;
+        private System.Windows.Forms.TrackBar trackBarB;
     }
 }
 
