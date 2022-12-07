@@ -17,7 +17,7 @@ using Emgu.CV;
 using Emgu.CV.UI;
 using Emgu.CV.Structure;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
-
+using System.Security.Cryptography.X509Certificates;
 
 namespace ProcesamientoDeImagenes
 {
@@ -25,6 +25,10 @@ namespace ProcesamientoDeImagenes
     {
         //Webcam
         Capture camera;
+
+        //Preview Image
+        Bitmap previewImage;
+
         //Histogram
         Mat m = new Mat();
         Image<Bgr, byte> _inputImage;
@@ -40,6 +44,11 @@ namespace ProcesamientoDeImagenes
         //RGB TrackBars
         double[] rgbColors;
 
+        //Detect Face
+        //public static CascadeClassifier cascadeClassifier;
+        bool detectFace;
+        public static int numFaces;
+
         private void Tmr_Tick(object sender, EventArgs e)
         {
             _inputImage = m.ToImage<Bgr, byte>();
@@ -53,9 +62,14 @@ namespace ProcesamientoDeImagenes
         {
             InitializeComponent();
 
-            rgbColors = new double[3] {0, 0, 0};
+            rgbColors = new double[3] { 0, 0, 0 };
 
-            RGBBox.Visible = true;
+            RGBBox.Enabled = true;
+
+            //Detect Face
+            //Face Detection
+            detectFace = false;
+            numFaces = 0;
 
             Timer tmr = new Timer();
             tmr.Interval = 50;
@@ -72,17 +86,16 @@ namespace ProcesamientoDeImagenes
             camera.Start();
         }
 
-        private void Form1_Update(object sender, EventArgs e)
-        {
-
-
-        }
-
         private void Camera_ImageGrabbed(object sender, EventArgs e)
         {
+            detectFace = facesCheck.Checked ? true : false;
+
+            countFaces(numFaces);
+
             try
             {
                 camera.Retrieve(m);
+                previewImage = m.ToImage<Bgr, byte>().Bitmap;
                 pt = new Point[m.Width, m.Height];
 
                 if (!string.IsNullOrEmpty(filter))
@@ -90,36 +103,36 @@ namespace ProcesamientoDeImagenes
                     switch (filter)
                     {
                         case "Invertir":
-                            pic.Image = Filtros.Invert(m.ToImage<Bgr, byte>().Bitmap);
+                            pic.Image = Filtros.Invert(previewImage, detectFace);
                             break;
                         case "Offset":
 
-                            pic.Image = Filtros.OffsetFilter(m.ToImage<Bgr, byte>().Bitmap, pt);
+                            pic.Image = Filtros.OffsetFilter(previewImage, pt, detectFace);
                             break;
 
                         case "B/N":
 
-                            pic.Image = Filtros.GrayScale(m.ToImage<Bgr, byte>().Bitmap);
+                            pic.Image = Filtros.GrayScale(previewImage, detectFace);
                             break;
 
                         case "Sepia":
-                            pic.Image = Filtros.DrawAsSepiaTone(m.ToImage<Bgr, byte>().Bitmap);
+                            pic.Image = Filtros.DrawAsSepiaTone(previewImage, detectFace);
                             break;
 
                         case "Tint":
-                            //RGBBox.Visible = true;
-                            pic.Image = Filtros.ColorTint(m.ToImage<Bgr, byte>().Bitmap, (float)rgbColors[2], (float)rgbColors[1], (float)rgbColors[0]);
+                            pic.Image = Filtros.ColorTint(previewImage, (float)rgbColors[2], (float)rgbColors[1], (float)rgbColors[0], detectFace);
                             break;
 
 
                         default:
-                            
+
                             break;
                     }
                 }
                 else
                 {
-                    pic.Image = m.ToImage<Bgr, byte>().Bitmap;
+                    if (detectFace) previewImage = Filtros.ShowFaces(previewImage);
+                    pic.Image = previewImage;
                 }
 
             }
@@ -161,5 +174,14 @@ namespace ProcesamientoDeImagenes
             rgbColors[2] = (double)trackBarB.Value / 100;
         }
 
+        private void countFaces(int numFaces)
+        {
+            if (InvokeRequired)
+            {
+                this.Invoke(new Action<int>(countFaces), new object[] { numFaces });
+                return;
+            }
+            facesCount.Text = numFaces.ToString();
+        }
     }
 }

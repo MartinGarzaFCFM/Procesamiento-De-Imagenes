@@ -153,6 +153,7 @@
     <None Include="assets\webcamMissing.jpg" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="assets\haarcascade_frontalface_alt_tree.xml" />
     <Content Include="cvextern.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

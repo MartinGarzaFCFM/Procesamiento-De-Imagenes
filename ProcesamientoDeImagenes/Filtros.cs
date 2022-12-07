@@ -6,12 +6,35 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.InteropServices;
+using Emgu.CV.Structure;
+using Emgu.CV;
 
 namespace ProcesamientoDeImagenes
 {
     public static class Filtros
     {
-        private static Bitmap ApplyColorMatrix(Image sourceImage, ColorMatrix colorMatrix)
+        public static CascadeClassifier cascadeClassifier = new CascadeClassifier("../../assets/haarcascade_frontalface_alt_tree.xml");
+
+        public static Bitmap ShowFaces(Bitmap b)
+        {
+            Form1.numFaces = 0;
+            Image<Bgr, byte> grayImage = new Image<Bgr, byte>(b);
+            Rectangle[] rectangles = cascadeClassifier.DetectMultiScale(grayImage, 1.2, 1);
+            foreach (Rectangle rectangle in rectangles)
+            {
+                using (Graphics graphics = Graphics.FromImage(b))
+                {
+                    using (Pen pen = new Pen(Color.Red, 1))
+                    {
+                        Form1.numFaces += 1;
+                        graphics.DrawRectangle(pen, rectangle);
+                    }
+                }
+            }
+            return b;
+        }
+
+        private static Bitmap ApplyColorMatrix(Image sourceImage, ColorMatrix colorMatrix, bool detectFaces)
         {
             Bitmap bmp32BppSource = GetArgbCopy(sourceImage);
             Bitmap bmp32BppDest = new Bitmap(bmp32BppSource.Width, bmp32BppSource.Height, PixelFormat.Format32bppArgb);
@@ -31,6 +54,7 @@ namespace ProcesamientoDeImagenes
 
             bmp32BppSource.Dispose();
 
+            if (detectFaces) bmp32BppDest = ShowFaces(bmp32BppDest);
 
             return bmp32BppDest;
         }
@@ -50,7 +74,7 @@ namespace ProcesamientoDeImagenes
             return bmpNew;
         }
 
-        public static Bitmap Invert(Bitmap b)
+        public static Bitmap Invert(Bitmap b, bool detectFaces)
         {
             // GDI+ still lies to us - the return format is BGR, NOT RGB. 
             BitmapData bmData = b.LockBits(new Rectangle(0, 0, b.Width, b.Height),
@@ -75,10 +99,12 @@ namespace ProcesamientoDeImagenes
 
             b.UnlockBits(bmData);
 
+            if (detectFaces) b = ShowFaces(b);
+
             return b;
         }
 
-        public static Bitmap GrayScale(Bitmap b)
+        public static Bitmap GrayScale(Bitmap b, bool detectFaces)
         {
             // GDI+ still lies to us - the return format is BGR, NOT RGB. 
             BitmapData bmData = b.LockBits(new Rectangle(0, 0, b.Width, b.Height),
@@ -113,10 +139,12 @@ namespace ProcesamientoDeImagenes
 
             b.UnlockBits(bmData);
 
+            if (detectFaces) b = ShowFaces(b);
+
             return b;
         }
 
-        public static Bitmap OffsetFilter(Bitmap b, Point[,] offset)
+        public static Bitmap OffsetFilter(Bitmap b, Point[,] offset, bool detectFaces)
         {
             Bitmap bSrc = (Bitmap)b.Clone();
 
@@ -163,10 +191,12 @@ namespace ProcesamientoDeImagenes
             b.UnlockBits(bmData);
             bSrc.UnlockBits(bmSrc);
 
+            if (detectFaces) b = ShowFaces(b);
+
             return b;
         }
 
-        public static Bitmap DrawAsSepiaTone(this Image sourceImage)
+        public static Bitmap DrawAsSepiaTone(this Image sourceImage, bool detectFaces)
         {
             ColorMatrix colorMatrix = new ColorMatrix(new float[][]
                        {
@@ -177,11 +207,10 @@ namespace ProcesamientoDeImagenes
                         new float[]{0, 0, 0, 0, 1}
                        });
 
-
-            return ApplyColorMatrix(sourceImage, colorMatrix);
+            return ApplyColorMatrix(sourceImage, colorMatrix, detectFaces);
         }
 
-        public static Bitmap ColorTint(Bitmap sourceBitmap, float blueTint, float greenTint, float redTint)
+        public static Bitmap ColorTint(Bitmap sourceBitmap, float blueTint, float greenTint, float redTint, bool detectFaces)
         {
             BitmapData sourceData = sourceBitmap.LockBits(new Rectangle(0, 0,
                                     sourceBitmap.Width, sourceBitmap.Height),
@@ -240,6 +269,7 @@ namespace ProcesamientoDeImagenes
             Marshal.Copy(pixelBuffer, 0, resultData.Scan0, pixelBuffer.Length);
             resultBitmap.UnlockBits(resultData);
 
+            if (detectFaces) resultBitmap = ShowFaces(resultBitmap);
 
             return resultBitmap;
         }

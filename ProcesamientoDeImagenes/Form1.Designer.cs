@@ -42,6 +42,8 @@ namespace ProcesamientoDeImagenes
             this.RGBBox = new System.Windows.Forms.GroupBox();
             this.trackBarB = new System.Windows.Forms.TrackBar();
             this.trackBarG = new System.Windows.Forms.TrackBar();
+            this.facesCheck = new System.Windows.Forms.CheckBox();
+            this.facesCount = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pic)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarR)).BeginInit();
             this.RGBBox.SuspendLayout();
@@ -139,10 +141,10 @@ namespace ProcesamientoDeImagenes
             // histogramBox1
             // 
             this.histogramBox1.AutoSize = true;
-            this.histogramBox1.Location = new System.Drawing.Point(668, 16);
+            this.histogramBox1.Location = new System.Drawing.Point(667, 16);
             this.histogramBox1.Margin = new System.Windows.Forms.Padding(4);
             this.histogramBox1.Name = "histogramBox1";
-            this.histogramBox1.Size = new System.Drawing.Size(514, 269);
+            this.histogramBox1.Size = new System.Drawing.Size(348, 189);
             this.histogramBox1.TabIndex = 8;
             // 
             // trackBarR
@@ -167,7 +169,6 @@ namespace ProcesamientoDeImagenes
             this.RGBBox.TabIndex = 11;
             this.RGBBox.TabStop = false;
             this.RGBBox.Text = "RGB";
-            this.RGBBox.Visible = false;
             // 
             // trackBarB
             // 
@@ -191,12 +192,34 @@ namespace ProcesamientoDeImagenes
             this.trackBarG.TabIndex = 11;
             this.trackBarG.Scroll += new System.EventHandler(this.trackBarG_Scroll);
             // 
+            // facesCheck
+            // 
+            this.facesCheck.AutoSize = true;
+            this.facesCheck.Font = new System.Drawing.Font("TodaySHOP-Medium", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.facesCheck.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.facesCheck.Location = new System.Drawing.Point(531, 512);
+            this.facesCheck.Name = "facesCheck";
+            this.facesCheck.Size = new System.Drawing.Size(125, 25);
+            this.facesCheck.TabIndex = 13;
+            this.facesCheck.Text = "Contar Caras";
+            this.facesCheck.UseVisualStyleBackColor = true;
+            // 
+            // facesCount
+            // 
+            this.facesCount.Location = new System.Drawing.Point(474, 512);
+            this.facesCount.Name = "facesCount";
+            this.facesCount.Size = new System.Drawing.Size(51, 25);
+            this.facesCount.TabIndex = 14;
+            this.facesCount.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.ClientSize = new System.Drawing.Size(1264, 681);
+            this.Controls.Add(this.facesCount);
+            this.Controls.Add(this.facesCheck);
             this.Controls.Add(this.RGBBox);
             this.Controls.Add(this.histogramBox1);
             this.Controls.Add(this.lblFilter);
@@ -239,6 +262,8 @@ namespace ProcesamientoDeImagenes
         private System.Windows.Forms.TrackBar trackBarR;
         private System.Windows.Forms.TrackBar trackBarG;
         private System.Windows.Forms.TrackBar trackBarB;
+        private System.Windows.Forms.CheckBox facesCheck;
+        private System.Windows.Forms.TextBox facesCount;
     }
 }
 
