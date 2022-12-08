@@ -47,7 +47,6 @@ namespace ProcesamientoDeImagenes
         //Detect Face
         //public static CascadeClassifier cascadeClassifier;
         bool detectFace;
-        public static int numFaces;
 
         private void Tmr_Tick(object sender, EventArgs e)
         {
@@ -69,7 +68,7 @@ namespace ProcesamientoDeImagenes
             //Detect Face
             //Face Detection
             detectFace = false;
-            numFaces = 0;
+            Form1Helpers.numFaces = 0;
 
             Timer tmr = new Timer();
             tmr.Interval = 50;
@@ -90,7 +89,7 @@ namespace ProcesamientoDeImagenes
         {
             detectFace = facesCheck.Checked ? true : false;
 
-            countFaces(numFaces);
+            countFaces(Form1Helpers.numFaces);
 
             try
             {
@@ -182,6 +181,34 @@ namespace ProcesamientoDeImagenes
                 return;
             }
             facesCount.Text = numFaces.ToString();
+        }
+
+        private void imagenToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //this.Hide();
+            //camera.Stop();
+
+            OpenFileDialog open = new OpenFileDialog();
+            open.Filter = "Archivos de Imagen(*.jpg; *.jpeg; *.gif; *.bmp)|*.jpg; *.jpeg; *.gif; *.bmp";
+            if (open.ShowDialog() == DialogResult.OK)
+            {
+                //Imagen Cargada
+                Form1Helpers.imagenload = new Bitmap(open.FileName);
+                ImageProcess imageProcess = new ImageProcess();
+                imageProcess.FormClosed += new FormClosedEventHandler(imageProcess_FormClosed);
+                imageProcess.Show();
+                this.Hide();
+            }
+            else
+            {
+
+            }
+
+        }
+
+        private void imageProcess_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            this.Show();
         }
     }
 }

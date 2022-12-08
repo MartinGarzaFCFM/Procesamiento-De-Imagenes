@@ -17,7 +17,7 @@ namespace ProcesamientoDeImagenes
 
         public static Bitmap ShowFaces(Bitmap b)
         {
-            Form1.numFaces = 0;
+            Form1Helpers.numFaces = 0;
             Image<Bgr, byte> grayImage = new Image<Bgr, byte>(b);
             Rectangle[] rectangles = cascadeClassifier.DetectMultiScale(grayImage, 1.2, 1);
             foreach (Rectangle rectangle in rectangles)
@@ -26,7 +26,7 @@ namespace ProcesamientoDeImagenes
                 {
                     using (Pen pen = new Pen(Color.Red, 1))
                     {
-                        Form1.numFaces += 1;
+                        Form1Helpers.numFaces += 1;
                         graphics.DrawRectangle(pen, rectangle);
                     }
                 }
@@ -74,8 +74,9 @@ namespace ProcesamientoDeImagenes
             return bmpNew;
         }
 
-        public static Bitmap Invert(Bitmap b, bool detectFaces)
+        public static Bitmap Invert(Bitmap a, bool detectFaces)
         {
+            Bitmap b = new Bitmap(a);
             // GDI+ still lies to us - the return format is BGR, NOT RGB. 
             BitmapData bmData = b.LockBits(new Rectangle(0, 0, b.Width, b.Height),
                 ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
@@ -104,8 +105,9 @@ namespace ProcesamientoDeImagenes
             return b;
         }
 
-        public static Bitmap GrayScale(Bitmap b, bool detectFaces)
+        public static Bitmap GrayScale(Bitmap a, bool detectFaces)
         {
+            Bitmap b = new Bitmap(a);
             // GDI+ still lies to us - the return format is BGR, NOT RGB. 
             BitmapData bmData = b.LockBits(new Rectangle(0, 0, b.Width, b.Height),
                 ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
@@ -144,8 +146,9 @@ namespace ProcesamientoDeImagenes
             return b;
         }
 
-        public static Bitmap OffsetFilter(Bitmap b, Point[,] offset, bool detectFaces)
+        public static Bitmap OffsetFilter(Bitmap a, Point[,] offset, bool detectFaces)
         {
+            Bitmap b = new Bitmap(a);
             Bitmap bSrc = (Bitmap)b.Clone();
 
             // GDI+ still lies to us - the return format is BGR, NOT RGB.

@@ -44,11 +44,16 @@ namespace ProcesamientoDeImagenes
             this.trackBarG = new System.Windows.Forms.TrackBar();
             this.facesCheck = new System.Windows.Forms.CheckBox();
             this.facesCount = new System.Windows.Forms.TextBox();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.abrirToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.imagenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.videoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.pic)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarR)).BeginInit();
             this.RGBBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarB)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarG)).BeginInit();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -57,7 +62,7 @@ namespace ProcesamientoDeImagenes
             this.label1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.label1.Font = new System.Drawing.Font("TodaySHOP-Medium", 16F);
             this.label1.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.label1.Location = new System.Drawing.Point(13, 550);
+            this.label1.Location = new System.Drawing.Point(13, 621);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(82, 24);
@@ -69,7 +74,7 @@ namespace ProcesamientoDeImagenes
             // 
             this.cboCamera.BackColor = System.Drawing.SystemColors.ScrollBar;
             this.cboCamera.FormattingEnabled = true;
-            this.cboCamera.Location = new System.Drawing.Point(103, 548);
+            this.cboCamera.Location = new System.Drawing.Point(103, 619);
             this.cboCamera.Margin = new System.Windows.Forms.Padding(4);
             this.cboCamera.Name = "cboCamera";
             this.cboCamera.Size = new System.Drawing.Size(302, 26);
@@ -81,7 +86,7 @@ namespace ProcesamientoDeImagenes
             this.pic.ErrorImage = global::ProcesamientoDeImagenes.Properties.Resources.webcamMissing;
             this.pic.Image = global::ProcesamientoDeImagenes.Properties.Resources.webcamMissing;
             this.pic.InitialImage = global::ProcesamientoDeImagenes.Properties.Resources.webcamMissing;
-            this.pic.Location = new System.Drawing.Point(16, 16);
+            this.pic.Location = new System.Drawing.Point(16, 83);
             this.pic.Margin = new System.Windows.Forms.Padding(4);
             this.pic.Name = "pic";
             this.pic.Size = new System.Drawing.Size(640, 480);
@@ -91,7 +96,7 @@ namespace ProcesamientoDeImagenes
             // 
             // btnStart
             // 
-            this.btnStart.Location = new System.Drawing.Point(432, 544);
+            this.btnStart.Location = new System.Drawing.Point(432, 615);
             this.btnStart.Margin = new System.Windows.Forms.Padding(4);
             this.btnStart.Name = "btnStart";
             this.btnStart.Size = new System.Drawing.Size(100, 32);
@@ -129,7 +134,7 @@ namespace ProcesamientoDeImagenes
             // 
             // btnPhoto
             // 
-            this.btnPhoto.Location = new System.Drawing.Point(556, 544);
+            this.btnPhoto.Location = new System.Drawing.Point(556, 615);
             this.btnPhoto.Margin = new System.Windows.Forms.Padding(4);
             this.btnPhoto.Name = "btnPhoto";
             this.btnPhoto.Size = new System.Drawing.Size(100, 32);
@@ -141,10 +146,10 @@ namespace ProcesamientoDeImagenes
             // histogramBox1
             // 
             this.histogramBox1.AutoSize = true;
-            this.histogramBox1.Location = new System.Drawing.Point(667, 16);
+            this.histogramBox1.Location = new System.Drawing.Point(686, 83);
             this.histogramBox1.Margin = new System.Windows.Forms.Padding(4);
             this.histogramBox1.Name = "histogramBox1";
-            this.histogramBox1.Size = new System.Drawing.Size(348, 189);
+            this.histogramBox1.Size = new System.Drawing.Size(446, 189);
             this.histogramBox1.TabIndex = 8;
             // 
             // trackBarR
@@ -197,7 +202,7 @@ namespace ProcesamientoDeImagenes
             this.facesCheck.AutoSize = true;
             this.facesCheck.Font = new System.Drawing.Font("TodaySHOP-Medium", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.facesCheck.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.facesCheck.Location = new System.Drawing.Point(531, 512);
+            this.facesCheck.Location = new System.Drawing.Point(531, 583);
             this.facesCheck.Name = "facesCheck";
             this.facesCheck.Size = new System.Drawing.Size(125, 25);
             this.facesCheck.TabIndex = 13;
@@ -206,11 +211,43 @@ namespace ProcesamientoDeImagenes
             // 
             // facesCount
             // 
-            this.facesCount.Location = new System.Drawing.Point(474, 512);
+            this.facesCount.Location = new System.Drawing.Point(474, 583);
             this.facesCount.Name = "facesCount";
             this.facesCount.Size = new System.Drawing.Size(51, 25);
             this.facesCount.TabIndex = 14;
             this.facesCount.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // menuStrip1
+            // 
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.abrirToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(1264, 24);
+            this.menuStrip1.TabIndex = 16;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // abrirToolStripMenuItem
+            // 
+            this.abrirToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.imagenToolStripMenuItem,
+            this.videoToolStripMenuItem});
+            this.abrirToolStripMenuItem.Name = "abrirToolStripMenuItem";
+            this.abrirToolStripMenuItem.Size = new System.Drawing.Size(45, 20);
+            this.abrirToolStripMenuItem.Text = "Abrir";
+            // 
+            // imagenToolStripMenuItem
+            // 
+            this.imagenToolStripMenuItem.Name = "imagenToolStripMenuItem";
+            this.imagenToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
+            this.imagenToolStripMenuItem.Text = "Imagen";
+            this.imagenToolStripMenuItem.Click += new System.EventHandler(this.imagenToolStripMenuItem_Click);
+            // 
+            // videoToolStripMenuItem
+            // 
+            this.videoToolStripMenuItem.Name = "videoToolStripMenuItem";
+            this.videoToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
+            this.videoToolStripMenuItem.Text = "Video";
             // 
             // Form1
             // 
@@ -229,8 +266,10 @@ namespace ProcesamientoDeImagenes
             this.Controls.Add(this.pic);
             this.Controls.Add(this.cboCamera);
             this.Controls.Add(this.label1);
+            this.Controls.Add(this.menuStrip1);
             this.Font = new System.Drawing.Font("TodaySHOP-Medium", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.IsMdiContainer = true;
+            this.MainMenuStrip = this.menuStrip1;
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -243,6 +282,8 @@ namespace ProcesamientoDeImagenes
             this.RGBBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarB)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarG)).EndInit();
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -264,6 +305,10 @@ namespace ProcesamientoDeImagenes
         private System.Windows.Forms.TrackBar trackBarB;
         private System.Windows.Forms.CheckBox facesCheck;
         private System.Windows.Forms.TextBox facesCount;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem abrirToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem imagenToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem videoToolStripMenuItem;
     }
 }
 
