@@ -276,5 +276,27 @@ namespace ProcesamientoDeImagenes
 
             return resultBitmap;
         }
+
+        public static Bitmap Mirror(Bitmap b, bool detectfaces)
+        {
+            Bitmap result = new Bitmap(b.Width, b.Height);
+
+            for (int y = 0; y < b.Height; y++)
+            {
+                for (int lx = 0, rx = b.Width - 1; lx < b.Width; lx++, rx--)
+                {
+                    //get source pixel value
+                    Color p = b.GetPixel(lx, y);
+
+                    //set mirror pixel value
+                    result.SetPixel(lx, y, p);
+                    result.SetPixel(rx, y, p);
+                }
+            }
+
+            if (detectfaces) result = ShowFaces(result);
+
+            return result;
+        }
     }
 }

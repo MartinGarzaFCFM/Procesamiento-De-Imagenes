@@ -32,7 +32,6 @@ namespace ProcesamientoDeImagenes
         {
             this.label1 = new System.Windows.Forms.Label();
             this.cboCamera = new System.Windows.Forms.ComboBox();
-            this.pic = new System.Windows.Forms.PictureBox();
             this.btnStart = new System.Windows.Forms.Button();
             this.cboFilter = new System.Windows.Forms.ComboBox();
             this.lblFilter = new System.Windows.Forms.Label();
@@ -48,12 +47,13 @@ namespace ProcesamientoDeImagenes
             this.abrirToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.imagenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.videoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            ((System.ComponentModel.ISupportInitialize)(this.pic)).BeginInit();
+            this.pic = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarR)).BeginInit();
             this.RGBBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarB)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarG)).BeginInit();
             this.menuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pic)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -80,20 +80,6 @@ namespace ProcesamientoDeImagenes
             this.cboCamera.Size = new System.Drawing.Size(302, 26);
             this.cboCamera.TabIndex = 1;
             // 
-            // pic
-            // 
-            this.pic.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pic.ErrorImage = global::ProcesamientoDeImagenes.Properties.Resources.webcamMissing;
-            this.pic.Image = global::ProcesamientoDeImagenes.Properties.Resources.webcamMissing;
-            this.pic.InitialImage = global::ProcesamientoDeImagenes.Properties.Resources.webcamMissing;
-            this.pic.Location = new System.Drawing.Point(16, 83);
-            this.pic.Margin = new System.Windows.Forms.Padding(4);
-            this.pic.Name = "pic";
-            this.pic.Size = new System.Drawing.Size(640, 480);
-            this.pic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.pic.TabIndex = 2;
-            this.pic.TabStop = false;
-            // 
             // btnStart
             // 
             this.btnStart.Location = new System.Drawing.Point(432, 615);
@@ -114,7 +100,8 @@ namespace ProcesamientoDeImagenes
             "Offset",
             "B/N",
             "Sepia",
-            "Tint"});
+            "Tint",
+            "Mirror"});
             this.cboFilter.Location = new System.Drawing.Point(662, 470);
             this.cboFilter.Name = "cboFilter";
             this.cboFilter.Size = new System.Drawing.Size(164, 26);
@@ -149,7 +136,7 @@ namespace ProcesamientoDeImagenes
             this.histogramBox1.Location = new System.Drawing.Point(686, 83);
             this.histogramBox1.Margin = new System.Windows.Forms.Padding(4);
             this.histogramBox1.Name = "histogramBox1";
-            this.histogramBox1.Size = new System.Drawing.Size(446, 189);
+            this.histogramBox1.Size = new System.Drawing.Size(495, 189);
             this.histogramBox1.TabIndex = 8;
             // 
             // trackBarR
@@ -239,15 +226,30 @@ namespace ProcesamientoDeImagenes
             // imagenToolStripMenuItem
             // 
             this.imagenToolStripMenuItem.Name = "imagenToolStripMenuItem";
-            this.imagenToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
+            this.imagenToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.imagenToolStripMenuItem.Text = "Imagen";
             this.imagenToolStripMenuItem.Click += new System.EventHandler(this.imagenToolStripMenuItem_Click);
             // 
             // videoToolStripMenuItem
             // 
             this.videoToolStripMenuItem.Name = "videoToolStripMenuItem";
-            this.videoToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
+            this.videoToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.videoToolStripMenuItem.Text = "Video";
+            this.videoToolStripMenuItem.Click += new System.EventHandler(this.videoToolStripMenuItem_Click);
+            // 
+            // pic
+            // 
+            this.pic.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pic.ErrorImage = global::ProcesamientoDeImagenes.Properties.Resources.webcamMissing;
+            this.pic.Image = global::ProcesamientoDeImagenes.Properties.Resources.webcamMissing;
+            this.pic.InitialImage = global::ProcesamientoDeImagenes.Properties.Resources.webcamMissing;
+            this.pic.Location = new System.Drawing.Point(16, 83);
+            this.pic.Margin = new System.Windows.Forms.Padding(4);
+            this.pic.Name = "pic";
+            this.pic.Size = new System.Drawing.Size(640, 480);
+            this.pic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pic.TabIndex = 2;
+            this.pic.TabStop = false;
             // 
             // Form1
             // 
@@ -276,7 +278,6 @@ namespace ProcesamientoDeImagenes
             this.Text = "Webcam";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.pic)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarR)).EndInit();
             this.RGBBox.ResumeLayout(false);
             this.RGBBox.PerformLayout();
@@ -284,6 +285,7 @@ namespace ProcesamientoDeImagenes
             ((System.ComponentModel.ISupportInitialize)(this.trackBarG)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pic)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -113,7 +113,7 @@ namespace ProcesamientoDeImagenes
             {
                 if (saveFileDialog.ShowDialog() == DialogResult.OK)
                 {
-                    imageOut.Image.Save(saveFileDialog.FileName);
+                    imagePic.Image.Save(saveFileDialog.FileName);
                 }
             }
         }

@@ -122,6 +122,10 @@ namespace ProcesamientoDeImagenes
                             pic.Image = Filtros.ColorTint(previewImage, (float)rgbColors[2], (float)rgbColors[1], (float)rgbColors[0], detectFace);
                             break;
 
+                        case "Mirror":
+                            pic.Image = Filtros.Mirror(previewImage, detectFace);
+                            break;
+
 
                         default:
 
@@ -206,7 +210,32 @@ namespace ProcesamientoDeImagenes
 
         }
 
+        private void videoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog open = new OpenFileDialog();
+            open.Filter = "Archivos de Video (*.mp4, *.flv) | *.mp4;*.flv";
+            if (open.ShowDialog() == DialogResult.OK)
+            {
+                Form1Helpers.videoCapture = new Capture(open.FileName);
+                Form1Helpers.TotalFrames = Convert.ToInt32(Form1Helpers.videoCapture.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.FrameCount));
+                Form1Helpers.FPS = Convert.ToInt32(Form1Helpers.videoCapture.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.Fps));
+                Form1Helpers.IsPlaying = true;
+                Form1Helpers.CurrentFrame = new Mat();
+                Form1Helpers.CurrentFrameNo = 0;
+
+                Form1Helpers.videoLoad = open.FileName;
+                VideoProcess videoProcess = new VideoProcess();
+                videoProcess.FormClosed += new FormClosedEventHandler(videoProcess_FormClosed);
+                videoProcess.Show();
+                this.Hide();
+            }
+        }
+
         private void imageProcess_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            this.Show();
+        }
+        private void videoProcess_FormClosed(object sender, FormClosedEventArgs e)
         {
             this.Show();
         }
