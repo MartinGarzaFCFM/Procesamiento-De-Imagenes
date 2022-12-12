@@ -9,10 +9,18 @@ using System.Runtime.InteropServices;
 using Emgu.CV.Structure;
 using Emgu.CV;
 
+using AForge.Vision.Motion;
+
 namespace ProcesamientoDeImagenes
 {
     public static class Filtros
     {
+        public struct FloatPoint
+        {
+            public double X;
+            public double Y;
+        }
+
         public static CascadeClassifier cascadeClassifier = new CascadeClassifier("../../assets/haarcascade_frontalface_alt_tree.xml");
 
         public static Bitmap ShowFaces(Bitmap b)
@@ -146,58 +154,6 @@ namespace ProcesamientoDeImagenes
             return b;
         }
 
-        public static Bitmap OffsetFilter(Bitmap a, Point[,] offset, bool detectFaces)
-        {
-            Bitmap b = new Bitmap(a);
-            Bitmap bSrc = (Bitmap)b.Clone();
-
-            // GDI+ still lies to us - the return format is BGR, NOT RGB.
-            BitmapData bmData = b.LockBits(new Rectangle(0, 0, b.Width, b.Height),
-                ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
-            BitmapData bmSrc = bSrc.LockBits(new Rectangle(0, 0,
-                bSrc.Width, bSrc.Height),
-                ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
-
-            int scanline = bmData.Stride;
-
-            System.IntPtr Scan0 = bmData.Scan0;
-            System.IntPtr SrcScan0 = bmSrc.Scan0;
-
-            unsafe
-            {
-                byte* p = (byte*)(void*)Scan0;
-                byte* pSrc = (byte*)(void*)SrcScan0;
-
-                int nOffset = bmData.Stride - b.Width * 3;
-                int nWidth = b.Width;
-                int nHeight = b.Height;
-
-                int xOffset, yOffset;
-
-                for (int y = 0; y < nHeight; ++y)
-                {
-                    for (int x = 0; x < nWidth; ++x)
-                    {
-                        xOffset = offset[x, y].X;
-                        yOffset = offset[x, y].Y;
-
-                        p[0] = pSrc[((y + yOffset) * scanline) + ((x + xOffset) * 3)];
-                        p[1] = pSrc[((y + yOffset) * scanline) + ((x + xOffset) * 3) + 1];
-                        p[2] = pSrc[((y + yOffset) * scanline) + ((x + xOffset) * 3) + 2];
-
-                        p += 3;
-                    }
-                    p += nOffset;
-                }
-            }
-
-            b.UnlockBits(bmData);
-            bSrc.UnlockBits(bmSrc);
-
-            if (detectFaces) b = ShowFaces(b);
-
-            return b;
-        }
 
         public static Bitmap DrawAsSepiaTone(this Image sourceImage, bool detectFaces)
         {
@@ -297,6 +253,253 @@ namespace ProcesamientoDeImagenes
             if (detectfaces) result = ShowFaces(result);
 
             return result;
+        }
+
+        public static Bitmap EdgeDetectHomogenity(Bitmap a, byte nThreshold, bool detectfaces)
+        {
+            Bitmap b = new Bitmap(a);
+            // This one works by working out the greatest difference between a 
+            // pixel and it's eight neighbours. The threshold allows softer edges to 
+            // be forced down to black, use 0 to negate it's effect.
+            Bitmap b2 = (Bitmap)b.Clone();
+
+            // GDI+ still lies to us - the return format is BGR, NOT RGB.
+            BitmapData bmData = b.LockBits(new Rectangle(0, 0, b.Width, b.Height),
+                                           ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
+            BitmapData bmData2 = b2.LockBits(new Rectangle(0, 0, b.Width, b.Height),
+                                             ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
+
+            int stride = bmData.Stride;
+            System.IntPtr Scan0 = bmData.Scan0;
+            System.IntPtr Scan02 = bmData2.Scan0;
+
+            unsafe
+            {
+                byte* p = (byte*)(void*)Scan0;
+                byte* p2 = (byte*)(void*)Scan02;
+
+                int nOffset = stride - b.Width * 3;
+                int nWidth = b.Width * 3;
+
+                int nPixel = 0, nPixelMax = 0;
+
+                p += stride;
+                p2 += stride;
+
+                for (int y = 1; y < b.Height - 1; ++y)
+                {
+                    p += 3;
+                    p2 += 3;
+
+                    for (int x = 3; x < nWidth - 3; ++x)
+                    {
+                        nPixelMax = Math.Abs(p2[0] - (p2 + stride - 3)[0]);
+                        nPixel = Math.Abs(p2[0] - (p2 + stride)[0]);
+                        if (nPixel > nPixelMax) nPixelMax = nPixel;
+
+                        nPixel = Math.Abs(p2[0] - (p2 + stride + 3)[0]);
+                        if (nPixel > nPixelMax) nPixelMax = nPixel;
+
+                        nPixel = Math.Abs(p2[0] - (p2 - stride)[0]);
+                        if (nPixel > nPixelMax) nPixelMax = nPixel;
+
+                        nPixel = Math.Abs(p2[0] - (p2 + stride)[0]);
+                        if (nPixel > nPixelMax) nPixelMax = nPixel;
+
+                        nPixel = Math.Abs(p2[0] - (p2 - stride - 3)[0]);
+                        if (nPixel > nPixelMax) nPixelMax = nPixel;
+
+                        nPixel = Math.Abs(p2[0] - (p2 - stride)[0]);
+                        if (nPixel > nPixelMax) nPixelMax = nPixel;
+
+                        nPixel = Math.Abs(p2[0] - (p2 - stride + 3)[0]);
+                        if (nPixel > nPixelMax) nPixelMax = nPixel;
+
+                        if (nPixelMax < nThreshold) nPixelMax = 0;
+
+                        p[0] = (byte)nPixelMax;
+
+                        ++p;
+                        ++p2;
+                    }
+
+                    p += 3 + nOffset;
+                    p2 += 3 + nOffset;
+                }
+            }
+
+            b.UnlockBits(bmData);
+            b2.UnlockBits(bmData2);
+
+            if (detectfaces) b = ShowFaces(b);
+
+            return b;
+
+        }
+
+        public static bool OffsetFilter(Bitmap b, Point[,] offset)
+        {
+            Bitmap bSrc = (Bitmap)b.Clone();
+
+            // GDI+ still lies to us - the return format is BGR, NOT RGB.
+            BitmapData bmData = b.LockBits(new Rectangle(0, 0, b.Width, b.Height),
+                ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
+            BitmapData bmSrc = bSrc.LockBits(new Rectangle(0, 0,
+                bSrc.Width, bSrc.Height),
+                ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
+
+            int scanline = bmData.Stride;
+
+            System.IntPtr Scan0 = bmData.Scan0;
+            System.IntPtr SrcScan0 = bmSrc.Scan0;
+
+            unsafe
+            {
+                byte* p = (byte*)(void*)Scan0;
+                byte* pSrc = (byte*)(void*)SrcScan0;
+
+                int nOffset = bmData.Stride - b.Width * 3;
+                int nWidth = b.Width;
+                int nHeight = b.Height;
+
+                int xOffset, yOffset;
+
+                for (int y = 0; y < nHeight; ++y)
+                {
+                    for (int x = 0; x < nWidth; ++x)
+                    {
+                        xOffset = offset[x, y].X;
+                        yOffset = offset[x, y].Y;
+
+                        p[0] = pSrc[((y + yOffset) * scanline) + ((x + xOffset) * 3)];
+                        p[1] = pSrc[((y + yOffset) * scanline) + ((x + xOffset) * 3) + 1];
+                        p[2] = pSrc[((y + yOffset) * scanline) + ((x + xOffset) * 3) + 2];
+
+                        p += 3;
+                    }
+                    p += nOffset;
+                }
+            }
+
+            b.UnlockBits(bmData);
+            bSrc.UnlockBits(bmSrc);
+
+            return true;
+        }
+
+        public static Bitmap OffsetFilterAbs(Bitmap b, Point[,] offset)
+        {
+            Bitmap bSrc = (Bitmap)b.Clone();
+
+            // GDI+ still lies to us - the return format is BGR, NOT RGB.
+            BitmapData bmData = b.LockBits(new Rectangle(0, 0, b.Width, b.Height), ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
+            BitmapData bmSrc = bSrc.LockBits(new Rectangle(0, 0, bSrc.Width, bSrc.Height), ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
+
+            int scanline = bmData.Stride;
+
+            System.IntPtr Scan0 = bmData.Scan0;
+            System.IntPtr SrcScan0 = bmSrc.Scan0;
+
+            unsafe
+            {
+                byte* p = (byte*)(void*)Scan0;
+                byte* pSrc = (byte*)(void*)SrcScan0;
+
+                int nOffset = bmData.Stride - b.Width * 3;
+                int nWidth = b.Width;
+                int nHeight = b.Height;
+
+                int xOffset, yOffset;
+
+                for (int y = 0; y < nHeight; ++y)
+                {
+                    for (int x = 0; x < nWidth; ++x)
+                    {
+                        xOffset = offset[x, y].X;
+                        yOffset = offset[x, y].Y;
+
+                        if (yOffset >= 0 && yOffset < nHeight && xOffset >= 0 && xOffset < nWidth)
+                        {
+                            p[0] = pSrc[(yOffset * scanline) + (xOffset * 3)];
+                            p[1] = pSrc[(yOffset * scanline) + (xOffset * 3) + 1];
+                            p[2] = pSrc[(yOffset * scanline) + (xOffset * 3) + 2];
+                        }
+
+                        p += 3;
+                    }
+                    p += nOffset;
+                }
+            }
+
+            b.UnlockBits(bmData);
+            bSrc.UnlockBits(bmSrc);
+
+            return b;
+        }
+
+        public static Bitmap Swirl(Bitmap a, double fDegree, bool detectfaces)
+        {
+            Bitmap b = new Bitmap(a);
+            int nWidth = b.Width;
+            int nHeight = b.Height;
+
+            FloatPoint[,] fp = new FloatPoint[nWidth, nHeight];
+            Point[,] pt = new Point[nWidth, nHeight];
+
+            Point mid = new Point();
+            mid.X = nWidth / 2;
+            mid.Y = nHeight / 2;
+
+            double theta, radius;
+            double newX, newY;
+
+            for (int x = 0; x < nWidth; ++x)
+                for (int y = 0; y < nHeight; ++y)
+                {
+                    int trueX = x - mid.X;
+                    int trueY = y - mid.Y;
+                    theta = Math.Atan2((trueY), (trueX));
+
+                    radius = Math.Sqrt(trueX * trueX + trueY * trueY);
+
+                    newX = mid.X + (radius * Math.Cos(theta + fDegree * radius));
+                    if (newX > 0 && newX < nWidth)
+                    {
+                        fp[x, y].X = newX;
+                        pt[x, y].X = (int)newX;
+                    }
+                    else
+                        fp[x, y].X = pt[x, y].X = x;
+
+                    newY = mid.Y + (radius * Math.Sin(theta + fDegree * radius));
+                    if (newY > 0 && newY < nHeight)
+                    {
+                        fp[x, y].Y = newY;
+                        pt[x, y].Y = (int)newY;
+                    }
+                    else
+                        fp[x, y].Y = pt[x, y].Y = y;
+                }
+
+            if (detectfaces) b = ShowFaces(b);
+
+            return OffsetFilterAbs(b, pt);
+        }
+    }
+
+    public class GridMotionProcessing
+    {
+        MotionDetector Detector;
+        float NivelDeDeteccion;
+        public GridMotionProcessing()
+        {
+            Detector = new MotionDetector(new TwoFramesDifferenceDetector(), new MotionBorderHighlighting());
+            NivelDeDeteccion = 0;
+        }
+
+        public void Detectar(Bitmap bitmap)
+        {
+            NivelDeDeteccion = Detector.ProcessFrame(bitmap);
         }
     }
 }

@@ -47,6 +47,10 @@ namespace ProcesamientoDeImagenes
         //Detect Face
         //public static CascadeClassifier cascadeClassifier;
         bool detectFace;
+        bool detectMov;
+
+        //Detect Mov
+        GridMotionProcessing detectarMov;
 
         private void Tmr_Tick(object sender, EventArgs e)
         {
@@ -68,12 +72,15 @@ namespace ProcesamientoDeImagenes
             //Detect Face
             //Face Detection
             detectFace = false;
+            detectMov = false;
             Form1Helpers.numFaces = 0;
 
             Timer tmr = new Timer();
             tmr.Interval = 50;
             tmr.Tick += Tmr_Tick;
             tmr.Start();
+
+            detectarMov = new GridMotionProcessing();
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -88,6 +95,7 @@ namespace ProcesamientoDeImagenes
         private void Camera_ImageGrabbed(object sender, EventArgs e)
         {
             detectFace = facesCheck.Checked ? true : false;
+            detectMov = MovCheck.Checked ? true : false;
 
             countFaces(Form1Helpers.numFaces);
 
@@ -104,9 +112,8 @@ namespace ProcesamientoDeImagenes
                         case "Invertir":
                             pic.Image = Filtros.Invert(previewImage, detectFace);
                             break;
-                        case "Offset":
-
-                            pic.Image = Filtros.OffsetFilter(previewImage, pt, detectFace);
+                        case "Remolino":
+                            pic.Image = Filtros.Swirl(previewImage, 0.01, detectFace);
                             break;
 
                         case "B/N":
@@ -126,6 +133,10 @@ namespace ProcesamientoDeImagenes
                             pic.Image = Filtros.Mirror(previewImage, detectFace);
                             break;
 
+                        case "Edge":
+                            pic.Image = Filtros.EdgeDetectHomogenity(previewImage, 0, detectFace);
+                            break;
+
 
                         default:
 
@@ -135,6 +146,8 @@ namespace ProcesamientoDeImagenes
                 else
                 {
                     if (detectFace) previewImage = Filtros.ShowFaces(previewImage);
+                    if (detectMov) detectarMov.Detectar(previewImage); ;
+
                     pic.Image = previewImage;
                 }
 

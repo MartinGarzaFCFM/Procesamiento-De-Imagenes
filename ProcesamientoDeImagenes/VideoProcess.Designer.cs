@@ -28,8 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(VideoProcess));
-            this.axWindowsMediaPlayer1 = new AxWMPLib.AxWindowsMediaPlayer();
             this.trackBar1 = new System.Windows.Forms.TrackBar();
             this.playBtn = new System.Windows.Forms.Button();
             this.imagePic = new System.Windows.Forms.PictureBox();
@@ -42,7 +40,6 @@
             this.trackBarR = new System.Windows.Forms.TrackBar();
             this.lblFilter = new System.Windows.Forms.Label();
             this.cboFilter = new System.Windows.Forms.ComboBox();
-            ((System.ComponentModel.ISupportInitialize)(this.axWindowsMediaPlayer1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.imagePic)).BeginInit();
             this.RGBBox.SuspendLayout();
@@ -50,15 +47,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.trackBarG)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarR)).BeginInit();
             this.SuspendLayout();
-            // 
-            // axWindowsMediaPlayer1
-            // 
-            this.axWindowsMediaPlayer1.Enabled = true;
-            this.axWindowsMediaPlayer1.Location = new System.Drawing.Point(459, 13);
-            this.axWindowsMediaPlayer1.Name = "axWindowsMediaPlayer1";
-            this.axWindowsMediaPlayer1.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axWindowsMediaPlayer1.OcxState")));
-            this.axWindowsMediaPlayer1.Size = new System.Drawing.Size(320, 240);
-            this.axWindowsMediaPlayer1.TabIndex = 5;
             // 
             // trackBar1
             // 
@@ -184,10 +172,12 @@
             this.cboFilter.Items.AddRange(new object[] {
             "",
             "Invertir",
-            "Offset",
+            "Remolino",
             "B/N",
             "Sepia",
-            "Tint"});
+            "Tint",
+            "Mirror",
+            "Edge"});
             this.cboFilter.Location = new System.Drawing.Point(334, 295);
             this.cboFilter.Name = "cboFilter";
             this.cboFilter.Size = new System.Drawing.Size(164, 21);
@@ -207,12 +197,10 @@
             this.Controls.Add(this.pauseBtn);
             this.Controls.Add(this.playBtn);
             this.Controls.Add(this.trackBar1);
-            this.Controls.Add(this.axWindowsMediaPlayer1);
             this.Controls.Add(this.imagePic);
             this.Name = "VideoProcess";
             this.Text = "VideoProcess";
             this.Load += new System.EventHandler(this.VideoProcess_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.axWindowsMediaPlayer1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.imagePic)).EndInit();
             this.RGBBox.ResumeLayout(false);
@@ -228,7 +216,6 @@
         #endregion
 
         private System.Windows.Forms.PictureBox imagePic;
-        private AxWMPLib.AxWindowsMediaPlayer axWindowsMediaPlayer1;
         private System.Windows.Forms.TrackBar trackBar1;
         private System.Windows.Forms.Button playBtn;
         private System.Windows.Forms.Button pauseBtn;

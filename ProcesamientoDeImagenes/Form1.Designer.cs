@@ -30,9 +30,6 @@ namespace ProcesamientoDeImagenes
         /// </summary>
         private void InitializeComponent()
         {
-            this.label1 = new System.Windows.Forms.Label();
-            this.cboCamera = new System.Windows.Forms.ComboBox();
-            this.btnStart = new System.Windows.Forms.Button();
             this.cboFilter = new System.Windows.Forms.ComboBox();
             this.lblFilter = new System.Windows.Forms.Label();
             this.btnPhoto = new System.Windows.Forms.Button();
@@ -48,6 +45,7 @@ namespace ProcesamientoDeImagenes
             this.imagenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.videoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pic = new System.Windows.Forms.PictureBox();
+            this.MovCheck = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarR)).BeginInit();
             this.RGBBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarB)).BeginInit();
@@ -56,52 +54,18 @@ namespace ProcesamientoDeImagenes
             ((System.ComponentModel.ISupportInitialize)(this.pic)).BeginInit();
             this.SuspendLayout();
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.label1.Font = new System.Drawing.Font("TodaySHOP-Medium", 16F);
-            this.label1.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.label1.Location = new System.Drawing.Point(13, 621);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(82, 24);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Camera:";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // cboCamera
-            // 
-            this.cboCamera.BackColor = System.Drawing.SystemColors.ScrollBar;
-            this.cboCamera.FormattingEnabled = true;
-            this.cboCamera.Location = new System.Drawing.Point(103, 619);
-            this.cboCamera.Margin = new System.Windows.Forms.Padding(4);
-            this.cboCamera.Name = "cboCamera";
-            this.cboCamera.Size = new System.Drawing.Size(302, 26);
-            this.cboCamera.TabIndex = 1;
-            // 
-            // btnStart
-            // 
-            this.btnStart.Location = new System.Drawing.Point(432, 615);
-            this.btnStart.Margin = new System.Windows.Forms.Padding(4);
-            this.btnStart.Name = "btnStart";
-            this.btnStart.Size = new System.Drawing.Size(100, 32);
-            this.btnStart.TabIndex = 3;
-            this.btnStart.Text = "&Start";
-            this.btnStart.UseVisualStyleBackColor = true;
-            this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
-            // 
             // cboFilter
             // 
             this.cboFilter.FormattingEnabled = true;
             this.cboFilter.Items.AddRange(new object[] {
             "",
             "Invertir",
-            "Offset",
+            "Remolino",
             "B/N",
             "Sepia",
             "Tint",
-            "Mirror"});
+            "Mirror",
+            "Edge"});
             this.cboFilter.Location = new System.Drawing.Point(662, 470);
             this.cboFilter.Name = "cboFilter";
             this.cboFilter.Size = new System.Drawing.Size(164, 26);
@@ -121,7 +85,7 @@ namespace ProcesamientoDeImagenes
             // 
             // btnPhoto
             // 
-            this.btnPhoto.Location = new System.Drawing.Point(556, 615);
+            this.btnPhoto.Location = new System.Drawing.Point(556, 583);
             this.btnPhoto.Margin = new System.Windows.Forms.Padding(4);
             this.btnPhoto.Name = "btnPhoto";
             this.btnPhoto.Size = new System.Drawing.Size(100, 32);
@@ -136,7 +100,7 @@ namespace ProcesamientoDeImagenes
             this.histogramBox1.Location = new System.Drawing.Point(686, 83);
             this.histogramBox1.Margin = new System.Windows.Forms.Padding(4);
             this.histogramBox1.Name = "histogramBox1";
-            this.histogramBox1.Size = new System.Drawing.Size(495, 189);
+            this.histogramBox1.Size = new System.Drawing.Size(578, 189);
             this.histogramBox1.TabIndex = 8;
             // 
             // trackBarR
@@ -189,7 +153,7 @@ namespace ProcesamientoDeImagenes
             this.facesCheck.AutoSize = true;
             this.facesCheck.Font = new System.Drawing.Font("TodaySHOP-Medium", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.facesCheck.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.facesCheck.Location = new System.Drawing.Point(531, 583);
+            this.facesCheck.Location = new System.Drawing.Point(270, 583);
             this.facesCheck.Name = "facesCheck";
             this.facesCheck.Size = new System.Drawing.Size(125, 25);
             this.facesCheck.TabIndex = 13;
@@ -198,7 +162,7 @@ namespace ProcesamientoDeImagenes
             // 
             // facesCount
             // 
-            this.facesCount.Location = new System.Drawing.Point(474, 583);
+            this.facesCount.Location = new System.Drawing.Point(213, 583);
             this.facesCount.Name = "facesCount";
             this.facesCount.Size = new System.Drawing.Size(51, 25);
             this.facesCount.TabIndex = 14;
@@ -226,14 +190,14 @@ namespace ProcesamientoDeImagenes
             // imagenToolStripMenuItem
             // 
             this.imagenToolStripMenuItem.Name = "imagenToolStripMenuItem";
-            this.imagenToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.imagenToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
             this.imagenToolStripMenuItem.Text = "Imagen";
             this.imagenToolStripMenuItem.Click += new System.EventHandler(this.imagenToolStripMenuItem_Click);
             // 
             // videoToolStripMenuItem
             // 
             this.videoToolStripMenuItem.Name = "videoToolStripMenuItem";
-            this.videoToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.videoToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
             this.videoToolStripMenuItem.Text = "Video";
             this.videoToolStripMenuItem.Click += new System.EventHandler(this.videoToolStripMenuItem_Click);
             // 
@@ -251,6 +215,18 @@ namespace ProcesamientoDeImagenes
             this.pic.TabIndex = 2;
             this.pic.TabStop = false;
             // 
+            // MovCheck
+            // 
+            this.MovCheck.AutoSize = true;
+            this.MovCheck.Font = new System.Drawing.Font("TodaySHOP-Medium", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.MovCheck.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.MovCheck.Location = new System.Drawing.Point(16, 583);
+            this.MovCheck.Name = "MovCheck";
+            this.MovCheck.Size = new System.Drawing.Size(191, 25);
+            this.MovCheck.TabIndex = 13;
+            this.MovCheck.Text = "Detectar Movimiento";
+            this.MovCheck.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 18F);
@@ -258,16 +234,14 @@ namespace ProcesamientoDeImagenes
             this.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.ClientSize = new System.Drawing.Size(1264, 681);
             this.Controls.Add(this.facesCount);
+            this.Controls.Add(this.MovCheck);
             this.Controls.Add(this.facesCheck);
             this.Controls.Add(this.RGBBox);
             this.Controls.Add(this.histogramBox1);
             this.Controls.Add(this.lblFilter);
             this.Controls.Add(this.cboFilter);
             this.Controls.Add(this.btnPhoto);
-            this.Controls.Add(this.btnStart);
             this.Controls.Add(this.pic);
-            this.Controls.Add(this.cboCamera);
-            this.Controls.Add(this.label1);
             this.Controls.Add(this.menuStrip1);
             this.Font = new System.Drawing.Font("TodaySHOP-Medium", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.IsMdiContainer = true;
@@ -292,11 +266,7 @@ namespace ProcesamientoDeImagenes
         }
 
         #endregion
-
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ComboBox cboCamera;
         private System.Windows.Forms.PictureBox pic;
-        private System.Windows.Forms.Button btnStart;
         private System.Windows.Forms.ComboBox cboFilter;
         private System.Windows.Forms.Label lblFilter;
         private System.Windows.Forms.Button btnPhoto;
@@ -311,6 +281,7 @@ namespace ProcesamientoDeImagenes
         private System.Windows.Forms.ToolStripMenuItem abrirToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem imagenToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem videoToolStripMenuItem;
+        private System.Windows.Forms.CheckBox MovCheck;
     }
 }
 

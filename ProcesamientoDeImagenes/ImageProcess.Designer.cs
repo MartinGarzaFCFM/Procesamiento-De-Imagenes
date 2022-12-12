@@ -133,10 +133,12 @@
             this.cboFilter.Items.AddRange(new object[] {
             "",
             "Invertir",
-            "Offset",
+            "Remolino",
             "B/N",
             "Sepia",
-            "Tint"});
+            "Tint",
+            "Mirror",
+            "Edge"});
             this.cboFilter.Location = new System.Drawing.Point(313, 284);
             this.cboFilter.Name = "cboFilter";
             this.cboFilter.Size = new System.Drawing.Size(164, 21);

@@ -50,6 +50,9 @@ namespace ProcesamientoDeImagenes
                         case "Invertir":
                             imageOut.Image = Filtros.Invert(imagenIn, detectFace);
                             break;
+                        case "Remolino":
+                            imageOut.Image = Filtros.Swirl(imagenIn, 0.01, detectFace);
+                            break;
 
                         case "B/N":
                             imageOut.Image = Filtros.GrayScale(imagenIn, detectFace);
@@ -62,7 +65,13 @@ namespace ProcesamientoDeImagenes
                         case "Tint":
                             imageOut.Image = Filtros.ColorTint(imagenIn, (float)rgbColors[2], (float)rgbColors[1], (float)rgbColors[0], detectFace);
                             break;
+                        case "Mirror":
+                            imageOut.Image = Filtros.Mirror(imagenIn, detectFace);
+                            break;
 
+                        case "Edge":
+                            imageOut.Image = Filtros.EdgeDetectHomogenity(imagenIn, 0, detectFace);
+                            break;
 
                         default:
                             imageOut.Image = null;

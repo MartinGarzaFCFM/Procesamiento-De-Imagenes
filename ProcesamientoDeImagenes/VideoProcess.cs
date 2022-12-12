@@ -41,9 +41,6 @@ namespace ProcesamientoDeImagenes
             trackBar1.Maximum= Form1Helpers.TotalFrames - 1;
             trackBar1.Value = 0;
 
-            axWindowsMediaPlayer1.URL = Form1Helpers.videoLoad;
-            axWindowsMediaPlayer1.Ctlcontrols.play();
-
             PlayVideo();
         }
 
@@ -136,8 +133,12 @@ namespace ProcesamientoDeImagenes
                         case "Invertir":
                             imagePic.Image = Filtros.Invert(Form1Helpers.CurrentFrame.Bitmap, detectFace);
                             break;
+                        case "Remolino":
+                            imagePic.Image = Filtros.Swirl(Form1Helpers.CurrentFrame.Bitmap, 0.01, detectFace);
+                            break;
 
                         case "B/N":
+
                             imagePic.Image = Filtros.GrayScale(Form1Helpers.CurrentFrame.Bitmap, detectFace);
                             break;
 
@@ -149,9 +150,17 @@ namespace ProcesamientoDeImagenes
                             imagePic.Image = Filtros.ColorTint(Form1Helpers.CurrentFrame.Bitmap, (float)rgbColors[2], (float)rgbColors[1], (float)rgbColors[0], detectFace);
                             break;
 
+                        case "Mirror":
+                            imagePic.Image = Filtros.Mirror(Form1Helpers.CurrentFrame.Bitmap, detectFace);
+                            break;
+
+                        case "Edge":
+                            imagePic.Image = Filtros.EdgeDetectHomogenity(Form1Helpers.CurrentFrame.Bitmap, 0, detectFace);
+                            break;
+
 
                         default:
-                            imagePic.Image = null;
+
                             break;
                     }
                 }
