@@ -235,6 +235,8 @@ namespace ProcesamientoDeImagenes
 
         public static Bitmap Mirror(Bitmap b, bool detectfaces)
         {
+
+
             Bitmap result = new Bitmap(b.Width, b.Height);
 
             for (int y = 0; y < b.Height; y++)

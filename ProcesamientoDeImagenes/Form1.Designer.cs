@@ -97,10 +97,10 @@ namespace ProcesamientoDeImagenes
             // histogramBox1
             // 
             this.histogramBox1.AutoSize = true;
-            this.histogramBox1.Location = new System.Drawing.Point(686, 83);
+            this.histogramBox1.Location = new System.Drawing.Point(667, 83);
             this.histogramBox1.Margin = new System.Windows.Forms.Padding(4);
             this.histogramBox1.Name = "histogramBox1";
-            this.histogramBox1.Size = new System.Drawing.Size(578, 189);
+            this.histogramBox1.Size = new System.Drawing.Size(380, 189);
             this.histogramBox1.TabIndex = 8;
             // 
             // trackBarR

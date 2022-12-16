@@ -161,9 +161,13 @@ namespace ProcesamientoDeImagenes
 
         private void btnStart_Click(object sender, EventArgs e)
         {
-
-
-            histogramBox1.Update();
+            using (SaveFileDialog saveFileDialog = new SaveFileDialog() { Filter = @"PNG|*.png" })
+            {
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    pic.Image.Save(saveFileDialog.FileName);
+                }
+            }
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
